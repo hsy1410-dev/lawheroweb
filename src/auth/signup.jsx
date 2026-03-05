@@ -8,7 +8,7 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 
-import { auth, db } from "../firebase";
+import { auth, db } from "../firebase/firebase";
 
 export default function NicknameScreen() {
 

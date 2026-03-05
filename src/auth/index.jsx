@@ -7,7 +7,7 @@ import {
 
 import { doc, getDoc } from "firebase/firestore";
 import { useState } from "react";
-import { auth, db } from "../firebase";
+import { auth, db } from "../firebase/firebase";
 
 export default function AuthLanding() {
 
