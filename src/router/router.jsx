@@ -5,12 +5,10 @@ import Community from "../pages/Community";
 import PostDetail from "../pages/PostDetail";
 import Install from "../pages/Install";
 
-import Navbar from "../components/Navbar";
 
 export default function Router() {
   return (
     <BrowserRouter>
-      <Navbar />
 
       <Routes>
         <Route path="/" element={<Home />} />
