@@ -223,10 +223,6 @@ alignItems:"center"
 
 <div style={{display:"flex",gap:18}}>
 
-<div style={{fontSize:26,cursor:"pointer"}}>
-🔍
-</div>
-
 </div>
 
 </div>
