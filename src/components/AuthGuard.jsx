@@ -1,9 +1,13 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { auth } from "../firebase/firebase";
+import { useAuth } from "../auth/AuthProvider";
 
 export default function AuthGuard({ children }) {
 
-  const user = auth.currentUser;
+  const { user, authReady } = useAuth();
+
+  if (!authReady) {
+    return null; // auth 체크 중
+  }
 
   if (!user) {
     return <Navigate to="/auth" replace />;
