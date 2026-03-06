@@ -61,7 +61,7 @@ export default function Home() {
         </a>
 
         {/* 커뮤니티 */}
-        <a href="/community">
+        <a href="/home">
           <button
             style={{
               background: "#EEF2FF",

@@ -1,8 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import BottomNavLayout from "../layouts/BottomNavLayout";
 
 /* 메인 */
 import Home from "../pages/Home";
 import TabHome from "../pages/TabHome";
+
 /* 커뮤니티 */
 import Community from "../pages/Community";
 import PostDetail from "../pages/CommunityDetail";
@@ -45,22 +47,67 @@ export default function Router() {
 
       <Routes>
 
-        {/* ================= 메인 ================= */}
+        {/* ================= 공개 페이지 ================= */}
 
         <Route path="/" element={<Home />} />
-        <Route path="/home" element={<TabHome/>} />
+        <Route path="/install" element={<Install />} />
 
-        {/* ================= 커뮤니티 ================= */}
+        {/* ================= 인증 ================= */}
+
+        <Route path="/auth" element={<AuthLanding />} />
+        <Route path="/auth/nickname" element={<Nickname />} />
+        <Route path="/auth/phone" element={<PhoneInfo />} />
+        <Route path="/auth/verify" element={<VerifyScreen />} />
+
+        {/* ================= BottomNav 포함 페이지 ================= */}
+
+        <Route
+          path="/home"
+          element={
+            <AuthGuard>
+              <BottomNavLayout>
+                <TabHome />
+              </BottomNavLayout>
+            </AuthGuard>
+          }
+        />
 
         <Route
           path="/community"
           element={
             <AuthGuard>
-              <Community />
+              <BottomNavLayout>
+                <Community />
+              </BottomNavLayout>
             </AuthGuard>
           }
         />
 
+        <Route
+          path="/chat"
+          element={
+            <AuthGuard>
+              <BottomNavLayout>
+                <ChatList />
+              </BottomNavLayout>
+            </AuthGuard>
+          }
+        />
+
+        <Route
+          path="/mypage"
+          element={
+            <AuthGuard>
+              <BottomNavLayout>
+                <MyPage />
+              </BottomNavLayout>
+            </AuthGuard>
+          }
+        />
+
+        {/* ================= BottomNav 없는 페이지 ================= */}
+
+        {/* 커뮤니티 */}
         <Route
           path="/community/:id"
           element={
@@ -106,17 +153,7 @@ export default function Router() {
           }
         />
 
-        {/* ================= 마이페이지 ================= */}
-
-        <Route
-          path="/mypage"
-          element={
-            <AuthGuard>
-              <MyPage />
-            </AuthGuard>
-          }
-        />
-
+        {/* 마이페이지 */}
         <Route
           path="/mypage/posts"
           element={
@@ -135,8 +172,7 @@ export default function Router() {
           }
         />
 
-        {/* ================= 상담 ================= */}
-
+        {/* 상담 */}
         <Route
           path="/consult/general"
           element={
@@ -164,17 +200,7 @@ export default function Router() {
           }
         />
 
-        {/* ================= 채팅 ================= */}
-
-        <Route
-          path="/chat"
-          element={
-            <AuthGuard>
-              <ChatList />
-            </AuthGuard>
-          }
-        />
-
+        {/* 채팅 */}
         <Route
           path="/chat/:id"
           element={
@@ -183,17 +209,6 @@ export default function Router() {
             </AuthGuard>
           }
         />
-
-        {/* ================= 기타 ================= */}
-
-        <Route path="/install" element={<Install />} />
-
-        {/* ================= 인증 ================= */}
-
-        <Route path="/auth" element={<AuthLanding />} />
-        <Route path="/auth/nickname" element={<Nickname />} />
-        <Route path="/auth/phone" element={<PhoneInfo />} />
-        <Route path="/auth/verify" element={<VerifyScreen />} />
 
       </Routes>
 

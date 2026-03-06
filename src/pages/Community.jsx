@@ -110,7 +110,7 @@ q = query(
 
     return () => unsub();
 
-  }, [mainTab]);
+  }, [mainTab, selectedField]);
 
   /* 작성자 레벨 구독 */
   useEffect(() => {

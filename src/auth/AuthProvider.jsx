@@ -2,12 +2,12 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase/firebase";
 
-const AuthContext = createContext(null);
+const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
 
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [authReady, setAuthReady] = useState(false);
 
   useEffect(() => {
 
@@ -19,7 +19,7 @@ export function AuthProvider({ children }) {
         setUser(null);
       }
 
-      setLoading(false);
+      setAuthReady(true);
 
     });
 
@@ -27,18 +27,16 @@ export function AuthProvider({ children }) {
 
   }, []);
 
-  const value = {
-    user,
-    uid: user?.uid || null,
-    loading
-  };
-
   return (
-    <AuthContext.Provider value={value}>
-      {!loading && children}
+    <AuthContext.Provider
+      value={{
+        user,
+        authReady
+      }}
+    >
+      {children}
     </AuthContext.Provider>
   );
-
 }
 
 export function useAuth() {
