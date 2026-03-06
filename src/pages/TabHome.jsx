@@ -118,7 +118,18 @@ const [unreadCount, setUnreadCount] = useState(0);
   }, []);
 
   /* 정보 글 */
+const handleQuickConsult = () => {
 
+  const guest = localStorage.getItem("guest");
+
+  if (guest) {
+    alert("상담을 이용하려면 로그인이 필요합니다.");
+    navigate("/auth");
+    return;
+  }
+
+  navigate("/consult/quick");
+};
  /* INFO 글 */
 
 useEffect(() => {
@@ -270,17 +281,17 @@ color:"#4F46E5"
 >
 
   <div
-    onClick={() => navigate("/consult/quick")}
-    style={{
-      display: "flex",
-      alignItems: "center",
-      background: "#F3F4F6",
-      padding: "14px 12px",
-      borderRadius: 28,
-      cursor: "pointer",
-    zIndex:9
-    }}
-  >
+  onClick={handleQuickConsult}
+  style={{
+    display: "flex",
+    alignItems: "center",
+    background: "#F3F4F6",
+    padding: "14px 12px",
+    borderRadius: 28,
+    cursor: "pointer",
+    zIndex: 9
+  }}
+>
 
     {/* 아이콘 */}
     <img
