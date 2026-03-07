@@ -94,7 +94,7 @@ export default function AuthLanding() {
   const handleKakaoLogin = () => {
 
     const redirectUri =
-      "https://naranweb.vercel.app/auth/kakao/callback";
+      "https://lawheroweb.vercel.app/auth/kakao/callback";
 
     const url =
       `https://kauth.kakao.com/oauth/authorize` +
