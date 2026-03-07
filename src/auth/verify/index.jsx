@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase/firebase";
+import { onAuthStateChanged } from "firebase/auth";
 
 export default function VerifyScreen() {
 
@@ -8,20 +9,24 @@ export default function VerifyScreen() {
 
   useEffect(() => {
 
-    const user = auth.currentUser;
+    const unsub = onAuthStateChanged(auth, (user) => {
 
-    if (!user) {
-      nav("/auth/login");
-      return;
-    }
+      if (!user) {
+        nav("/auth/login");
+        return;
+      }
 
-    const url =
-      "https://api-6g2eamnopq-uc.a.run.app/kmc/start?uid=" +
-      user.uid +
-      "&platform=web";
+      const url =
+        "https://api-6g2eamnopq-uc.a.run.app/kmc/start?uid=" +
+        user.uid +
+        "&platform=web";
 
-    // 🔥 바로 KMC 인증 페이지 이동
-    window.location.href = url;
+      // 🔥 KMC 인증 이동
+      window.location.href = url;
+
+    });
+
+    return () => unsub();
 
   }, []);
 
