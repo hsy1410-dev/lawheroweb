@@ -209,20 +209,34 @@ q = query(
       >
         <FiHelpCircle size={22} color="#6B7280" />
       </button>
-        <button
-    onClick={() => nav("/community/write")}
-    style={{
-      background: "#111827",
-      color: "white",
-      border: "none",
-      padding: "8px 14px",
-      borderRadius: 8,
-      fontWeight: 600,
-      cursor: "pointer"
-    }}
-  >
-    글쓰기
-  </button>
+     <button
+  onClick={() => {
+
+    const isGuest = localStorage.getItem("guest") === "true";
+
+    if (isGuest) {
+
+      localStorage.removeItem("guest");
+      nav("/auth");
+
+      return;
+    }
+
+    nav("/community/write");
+
+  }}
+  style={{
+    background: "#111827",
+    color: "white",
+    border: "none",
+    padding: "8px 14px",
+    borderRadius: 8,
+    fontWeight: 600,
+    cursor: "pointer"
+  }}
+>
+  글쓰기
+</button>
     </div>
 
       {/* 탭 */}
