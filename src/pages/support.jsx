@@ -1,13 +1,52 @@
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import { useState } from "react";
+import {
+  addDoc,
+  collection,
+  onSnapshot,
+  query,
+  serverTimestamp,
+  where
+} from "firebase/firestore";
+
+import { useEffect, useState } from "react";
 import { auth, db } from "../firebase/firebase";
 
 export default function Support() {
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [tickets, setTickets] = useState([]);
 
   const user = auth.currentUser;
+
+  /* 내 문의 불러오기 */
+
+  useEffect(() => {
+
+    if (!user) return;
+
+    const q = query(
+      collection(db, "support_requests"),
+      where("uid", "==", user.uid)
+    );
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+
+      const list = [];
+
+      snapshot.forEach((doc) => {
+        list.push({
+          id: doc.id,
+          ...doc.data()
+        });
+      });
+
+      setTickets(list);
+
+    });
+
+    return unsubscribe;
+
+  }, [user]);
 
   const handleSubmit = async () => {
 
@@ -73,21 +112,11 @@ export default function Support() {
         }}
       >
 
-        <div
-          style={{
-            fontWeight:700,
-            marginBottom:6
-          }}
-        >
+        <div style={{fontWeight:700, marginBottom:6}}>
           문의하기
         </div>
 
-        <div
-          style={{
-            fontSize:14,
-            color:"#6B7280"
-          }}
-        >
+        <div style={{fontSize:14, color:"#6B7280"}}>
           서비스 이용 중 문제가 발생했거나 문의사항이 있으면 남겨주세요.
         </div>
 
@@ -144,6 +173,83 @@ export default function Support() {
       >
         문의 제출
       </button>
+
+      {/* 내 문의 */}
+
+      <div style={{marginTop:40}}>
+
+        <h2
+          style={{
+            fontSize:20,
+            fontWeight:700,
+            marginBottom:16
+          }}
+        >
+          내 문의
+        </h2>
+
+        {tickets.map((ticket)=>(
+
+          <div
+            key={ticket.id}
+            style={{
+              border:"1px solid #E5E7EB",
+              borderRadius:12,
+              padding:16,
+              marginBottom:14,
+              background:"#fff"
+            }}
+          >
+
+            <div style={{fontWeight:700, marginBottom:6}}>
+              {ticket.title}
+            </div>
+
+            <div style={{color:"#6B7280", marginBottom:10}}>
+              {ticket.content}
+            </div>
+
+            <div style={{fontSize:13, marginBottom:10}}>
+              상태 :
+              {ticket.status === "pending"
+                ? " ⏳ 답변 대기중"
+                : " ✅ 답변 완료"}
+            </div>
+
+            {/* 관리자 답변 */}
+
+            {ticket.answer && (
+
+              <div
+                style={{
+                  background:"#F3F4F6",
+                  padding:12,
+                  borderRadius:8
+                }}
+              >
+
+                <div
+                  style={{
+                    fontWeight:700,
+                    marginBottom:4
+                  }}
+                >
+                  관리자 답변
+                </div>
+
+                <div style={{color:"#374151"}}>
+                  {ticket.answer}
+                </div>
+
+              </div>
+
+            )}
+
+          </div>
+
+        ))}
+
+      </div>
 
     </div>
 
