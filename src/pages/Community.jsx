@@ -66,7 +66,7 @@ export default function Community() {
 const nav = useNavigate(); 
   const [posts, setPosts] = useState([]);
   const [mainTab, setMainTab] = useState("experience");
-
+const [showInstallPopup, setShowInstallPopup] = useState(true);
   const [user, setUser] = useState(null);
   const [savedPosts, setSavedPosts] = useState([]);
 
@@ -184,7 +184,100 @@ q = query(
   };
 
   return (
+    <>
+{showInstallPopup && (
 
+<div
+style={{
+position:"fixed",
+top:0,
+left:0,
+right:0,
+bottom:0,
+background:"rgba(0,0,0,0.45)",
+display:"flex",
+justifyContent:"center",
+alignItems:"center",
+zIndex:9999
+}}
+>
+
+<div
+style={{
+background:"white",
+borderRadius:20,
+padding:30,
+width:"90%",
+maxWidth:360,
+textAlign:"center"
+}}
+>
+
+<div
+style={{
+fontSize:20,
+fontWeight:800,
+marginBottom:10
+}}
+>
+LawHero 앱에서 이용하세요
+</div>
+
+<div
+style={{
+fontSize:14,
+color:"#6B7280",
+marginBottom:24
+}}
+>
+커뮤니티 기능은 앱에서 제공됩니다
+</div>
+
+<button
+onClick={()=>{
+window.open(
+"https://play.google.com/store/apps/details?id=com.anonymous.lawhero"
+);
+}}
+style={{
+width:"100%",
+padding:14,
+marginBottom:10,
+background:"#111827",
+color:"white",
+border:"none",
+borderRadius:10,
+fontWeight:700,
+cursor:"pointer"
+}}
+>
+Google Play
+</button>
+
+<button
+onClick={()=>{
+window.open(
+"https://apps.apple.com/"
+);
+}}
+style={{
+width:"100%",
+padding:14,
+background:"#F3F4F6",
+border:"none",
+borderRadius:10,
+fontWeight:700,
+cursor:"pointer"
+}}
+>
+App Store
+</button>
+
+</div>
+
+</div>
+
+)}
     <div className="container">
 
       <div
@@ -615,5 +708,6 @@ q = query(
 )}
 </div>
 </div>
+</>
   );
 }
