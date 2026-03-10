@@ -1,8 +1,6 @@
-.c {
-    max-width:720,
-}
-@media (max-width:768px){
-.c{
-max-width:100%;
-}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
