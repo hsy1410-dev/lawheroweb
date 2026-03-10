@@ -5,7 +5,7 @@ import AuthGuard from "../components/AuthGuard";
 import TierGuide from "../pages/TierGuide";
 /* 메인 */
 import TabHome from "../pages/TabHome";
-import EmailLogin from "./pages/auth/EmailLogin";
+import EmailLogin from "../auth/EmailLogin";
 /* 커뮤니티 */
 import Community from "../pages/Community";
 import PostDetail from "../pages/CommunityDetail";
