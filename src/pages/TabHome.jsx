@@ -95,9 +95,7 @@ export default function Home() {
 const [unreadCount, setUnreadCount] = useState(0);
   const [expertPosts, setExpertPosts] = useState([]);
   const [infoPosts, setInfoPosts] = useState([]);
-
-  /* 전문가 글 */
-
+const [showInstallPopup, setShowInstallPopup] = useState(false);
   useEffect(() => {
 
     const q = query(
@@ -565,7 +563,7 @@ return(
 
 <div
 key={post.id}
-onClick={()=>navigate(`/community/${post.id}`)}
+onClick={()=>setShowInstallPopup(true)}
 style={{
 minWidth:220,
 background:"white",
@@ -638,7 +636,7 @@ marginLeft:20
 {infoPosts.map((post)=>(
 <div
 key={post.id}
-onClick={()=>navigate(`/community/${post.id}`)}
+onClick={()=>setShowInstallPopup(true)}
 style={{
 background:"#F9FAFB",
 borderRadius:20,
@@ -709,7 +707,112 @@ color:"#9CA3AF"
 ))}
 
 </div>
+{showInstallPopup && (
 
+<div
+style={{
+position:"fixed",
+top:0,
+left:0,
+right:0,
+bottom:0,
+background:"rgba(0,0,0,0.4)",
+display:"flex",
+justifyContent:"center",
+alignItems:"center",
+zIndex:999
+}}
+>
+
+<div
+style={{
+background:"white",
+borderRadius:20,
+padding:28,
+width:"90%",
+maxWidth:340,
+textAlign:"center"
+}}
+>
+
+<div
+style={{
+fontSize:18,
+fontWeight:700,
+marginBottom:10
+}}
+>
+로히어로 앱에서 확인하세요
+</div>
+
+<div
+style={{
+fontSize:14,
+color:"#6B7280",
+marginBottom:24
+}}
+>
+전체 법률 사례는 앱에서 확인할 수 있습니다
+</div>
+
+{/* 플레이스토어 */}
+<button
+onClick={()=>{
+window.open(
+"https://play.google.com/store/apps/details?id=com.anonymous.lawhero"
+);
+}}
+style={{
+width:"100%",
+padding:12,
+marginBottom:10,
+background:"#111827",
+color:"white",
+border:"none",
+borderRadius:10,
+fontWeight:600,
+cursor:"pointer"
+}}
+>
+Google Play
+</button>
+
+{/* 앱스토어 */}
+<button
+onClick={()=>{
+window.open("https://apps.apple.com/");
+}}
+style={{
+width:"100%",
+padding:12,
+background:"#F3F4F6",
+border:"none",
+borderRadius:10,
+fontWeight:600,
+cursor:"pointer"
+}}
+>
+App Store
+</button>
+
+{/* 닫기 */}
+<div
+onClick={()=>setShowInstallPopup(false)}
+style={{
+marginTop:16,
+fontSize:13,
+color:"#9CA3AF",
+cursor:"pointer"
+}}
+>
+닫기
+</div>
+
+</div>
+
+</div>
+
+)}
 </div>
 </div>
 
