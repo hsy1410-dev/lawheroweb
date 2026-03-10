@@ -49,7 +49,7 @@ export default function Router() {
 
         {/* 공개 페이지 */}
 
-        <Route path="/" element={<Navigate to="/auth" replace />} />
+        <Route path="/" element={<Navigate to="/home" replace />} />
         <Route path="/install" element={<Install />} />
 
         {/* 인증 */}
