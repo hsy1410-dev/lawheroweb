@@ -4,7 +4,6 @@ import BottomNavLayout from "../layouts/BottomNavLayout";
 import AuthGuard from "../components/AuthGuard";
 import TierGuide from "../pages/TierGuide";
 /* 메인 */
-import Home from "../pages/Home";
 import TabHome from "../pages/TabHome";
 
 /* 커뮤니티 */
