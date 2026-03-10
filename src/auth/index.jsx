@@ -204,7 +204,30 @@ gap:10
 카카오로 시작하기
 
 </button>
+{/* Email 버튼 */}
 
+<button
+onClick={() => nav("/auth/email")}
+style={{
+width:"100%",
+background:"#111827",
+color:"white",
+border:"none",
+padding:16,
+borderRadius:18,
+fontSize:16,
+fontWeight:700,
+cursor:"pointer",
+display:"flex",
+alignItems:"center",
+justifyContent:"center",
+marginTop:16
+}}
+>
+
+이메일로 로그인하기
+
+</button>
 </div>
 
 </div>
