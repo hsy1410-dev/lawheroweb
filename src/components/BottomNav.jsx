@@ -11,17 +11,13 @@ import {
 } from "react-icons/io5";
 
 export default function BottomNav() {
-const handleMenuClick = (menu) => {
 
-  if (menu.path === "/community") {
-    setShowInstallPopup(true);
-    return;
-  }
-
-  navigate(menu.path);
-};
   const navigate = useNavigate();
   const location = useLocation();
+
+  const handleMenuClick = (menu) => {
+    navigate(menu.path);
+  };
 
   const menus = [
     {
@@ -76,7 +72,7 @@ const handleMenuClick = (menu) => {
         return (
           <button
             key={menu.path}
-           onClick={() => handleMenuClick(menu)}
+            onClick={() => handleMenuClick(menu)}
             style={{
               background: "none",
               border: "none",
@@ -105,9 +101,6 @@ const handleMenuClick = (menu) => {
         );
 
       })}
-
     </nav>
-    
   );
-
 }
