@@ -99,7 +99,9 @@ style={{
 background:"#F5F6F8",
 minHeight:"100vh",
 display:"flex",
-justifyContent:"center"
+justifyContent:"center",
+flexDirection:"column",
+alignItems:"center"
 }}
 >
 
@@ -107,7 +109,7 @@ justifyContent:"center"
 style={{
 width:"100%",
 maxWidth:420,
-padding:"80px 24px"
+padding:"80px 24px 0 24px"
 }}
 >
 
@@ -119,22 +121,36 @@ fontSize:28,
 fontWeight:800,
 textAlign:"center",
 lineHeight:1.4,
-marginBottom:60
+marginBottom:40
 }}
 >
 당신에게 맞는 <br/>
 전문가와 연결됩니다
 </div>
 
-{/* 이미지 */}
+</div>
+
+{/* 이미지 (전체폭) */}
 
 <img
 src={authImage}
 style={{
-width:"100%",
-marginBottom:80
+  width: "100vw",
+    maxWidth: 480,
+marginBottom:60
 }}
 />
+
+{/* 버튼 영역 */}
+
+<div
+style={{
+width:"100%",
+maxWidth:420,
+margin:"0 auto",
+padding:"0 24px"
+}}
+>
 
 {/* Google 버튼 */}
 
