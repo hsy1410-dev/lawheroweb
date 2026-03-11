@@ -17,7 +17,7 @@ export default function VerifyScreen() {
       }
 
       const url =
-        "https://api-6g2eamnopq-uc.a.run.app/kmc/start?uid=" +
+        "https://api-z3zamhysqa-uc.a.run.app/kmc/start?uid=" +
         user.uid +
         "&platform=web";
 
