@@ -857,8 +857,17 @@ style={{
 position:"fixed",
 left:0,
 right:0,
-bottom:0,
-zIndex:999
+bottom:70,
+zIndex:999,
+display:"flex",
+justifyContent:"center"
+}}
+>
+
+<div
+style={{
+width:"100%",
+maxWidth:420   // 👈 PC에서 최대 크기 제한
 }}
 >
 
@@ -903,6 +912,8 @@ fontWeight:600
 }}
 >
 닫기
+</div>
+
 </div>
 
 </div>
