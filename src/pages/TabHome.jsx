@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import pop from "../assets/pop.png";
 import {
   collection,
   onSnapshot,
@@ -96,6 +96,42 @@ const [unreadCount, setUnreadCount] = useState(0);
   const [expertPosts, setExpertPosts] = useState([]);
   const [infoPosts, setInfoPosts] = useState([]);
 const [showInstallPopup, setShowInstallPopup] = useState(false);
+const [showBanner, setShowBanner] = useState(false);
+useEffect(() => {
+
+  const saved = localStorage.getItem("hideBanner");
+
+  if (!saved) {
+    setShowBanner(true);
+    return;
+  }
+
+  const expire = Number(saved);
+
+  if (Date.now() > expire) {
+    localStorage.removeItem("hideBanner");
+    setShowBanner(true);
+  }
+
+}, []);
+const handleHideToday = () => {
+
+  const now = new Date();
+
+  const tomorrow = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate() + 1
+  );
+
+  localStorage.setItem(
+    "hideBanner",
+    tomorrow.getTime()
+  );
+
+  setShowBanner(false);
+
+};
   useEffect(() => {
 
     const q = query(
@@ -814,7 +850,68 @@ cursor:"pointer"
 
 )}
 </div>
+{showBanner && (
+
+<div
+style={{
+position:"fixed",
+left:0,
+right:0,
+bottom:0,
+zIndex:999
+}}
+>
+
+{/* 배너 이미지 */}
+
+<img
+src={pop}
+style={{
+width:"100%",
+display:"block"
+}}
+/>
+
+{/* 하단 컨트롤 */}
+
+<div
+style={{
+background:"#E5E5E5",
+padding:"12px 16px",
+display:"flex",
+justifyContent:"space-between",
+alignItems:"center",
+fontSize:14
+}}
+>
+
+<div
+onClick={handleHideToday}
+style={{
+cursor:"pointer",
+color:"#6B7280"
+}}
+>
+✔ 오늘 하루 보지 않기
 </div>
+
+<div
+onClick={()=>setShowBanner(false)}
+style={{
+cursor:"pointer",
+fontWeight:600
+}}
+>
+닫기
+</div>
+
+</div>
+
+</div>
+
+)}
+</div>
+
 
 )
 
