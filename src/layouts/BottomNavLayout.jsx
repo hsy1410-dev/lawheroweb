@@ -62,7 +62,7 @@ export default function BottomNavLayout() {
           <div
             style={{
               width: "100%",
-              maxWidth: 420
+              maxWidth: 720
             }}
           >
 
