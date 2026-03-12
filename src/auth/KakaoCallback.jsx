@@ -21,7 +21,7 @@ export default function KakaoCallback() {
           body: JSON.stringify({
             code,
             redirectUri:
-              "https://lawhero-web.vercel.app/auth/kakao/callback"
+              "https://www.lawhero.kr/auth/kakao/callback"
           })
         }
       );
