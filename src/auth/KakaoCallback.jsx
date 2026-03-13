@@ -39,7 +39,7 @@ export default function KakaoCallback() {
             },
             body: JSON.stringify({
               code,
-              redirectUri: "https://www.lawhero.kr/auth/kakao/callback"
+              redirectUri: "https://lawhero.kr/auth/kakao/callback"
             }),
           }
         );
