@@ -79,7 +79,7 @@ export default function NicknameScreen() {
 
       });
 
-      nav("/auth/verify");
+      nav("/auth/phone-info");
 
     } catch (error) {
 
