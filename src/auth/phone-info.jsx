@@ -34,7 +34,7 @@ export default function PhoneInfoScreen() {
         { merge: true }
       );
 
-      nav("/verify");
+      nav("/auth/verify");
 
     } catch (error) {
 
