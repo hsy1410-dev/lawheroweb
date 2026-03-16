@@ -690,26 +690,23 @@ border:"1px solid #E5E7EB"
 
 <div
 style={{
-width:64,
-height:64,
-borderRadius:16,
-background:"#E5E7EB",
-overflow:"hidden",
-marginRight:14
+  width:60,
+  height:60,
+  borderRadius:12,
+  overflow:"hidden",
+  background:"#E5E7EB"
 }}
 >
-
-{post.imageUrl && (
-<img
-src={post.imageUrl}
-style={{
-width:"100%",
-height:"100%",
-objectFit: "contain"
-}}
-/>
-)}
-
+  {post.imageUrl && (
+    <img
+      src={post.imageUrl}
+      style={{
+        width:"100%",
+        height:"100%",
+        objectFit:"contain"
+      }}
+    />
+  )}
 </div>
 
 <div>
