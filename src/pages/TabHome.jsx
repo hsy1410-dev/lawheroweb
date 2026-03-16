@@ -686,14 +686,15 @@ border:"1px solid #E5E7EB"
 }}
 >
 
-<div style={{display:"flex"}}>
+<div style={{display:"flex", gap:12}}>
 
 <div
 style={{
   width:60,
   height:60,
   borderRadius:12,
-  overflow:"hidden"
+  overflow:"hidden",
+  flexShrink:0
 }}
 >
   {post.imageUrl && (
@@ -708,7 +709,7 @@ style={{
   )}
 </div>
 
-<div>
+<div style={{flex:1}}>
 
 <div
 style={{
