@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { signInWithCustomToken } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
-
+import hi from "../assets/hi.png"
 export default function KakaoCallback() {
 
   console.log("🔥 KakaoCallback mounted");
@@ -95,8 +95,45 @@ export default function KakaoCallback() {
   }, []);
 
   return (
-    <div style={{ padding: 40 }}>
-      카카오 로그인 중...
+  <div
+    style={{
+      minHeight: "100vh",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+      textAlign: "center",
+      padding: 40
+    }}
+  >
+
+    <img
+      src={hi}
+      style={{
+        width: 120,
+        marginBottom: 24
+      }}
+    />
+
+    <div
+      style={{
+        fontSize: 18,
+        fontWeight: 600,
+        marginBottom: 8
+      }}
+    >
+      카카오 로그인 중입니다
     </div>
-  );
+
+    <div
+      style={{
+        fontSize: 14,
+        color: "#6B7280"
+      }}
+    >
+      잠시만 기다려 주세요
+    </div>
+
+  </div>
+);
 }
