@@ -693,8 +693,7 @@ style={{
   width:60,
   height:60,
   borderRadius:12,
-  overflow:"hidden",
-  background:"#E5E7EB"
+  overflow:"hidden"
 }}
 >
   {post.imageUrl && (
@@ -703,7 +702,7 @@ style={{
       style={{
         width:"100%",
         height:"100%",
-        objectFit:"contain"
+        objectFit:"cover"
       }}
     />
   )}
