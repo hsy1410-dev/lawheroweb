@@ -103,7 +103,9 @@ export default function GeneralConsult() {
         referrer,
         isNaverBrowser,
         isNaverReferrer,
-        isFromNaver
+        isFromNaver,
+        needsManualAssignment: false,
+  assignmentType: "auto"
       });
 
       const requestId = requestRef.id;
