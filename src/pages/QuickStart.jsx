@@ -70,6 +70,8 @@ export default function QuickStart() {
             isNaverBrowser,
             isNaverReferrer,
             isFromNaver,
+             needsManualAssignment: true,
+  assignmentType: "manual"
           }
         );
 
