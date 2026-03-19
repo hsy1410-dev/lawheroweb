@@ -40,6 +40,7 @@ export default function QuickStart() {
       const isNaverReferrer = /naver\.com/i.test(referrer);
       const isFromNaver = isNaverBrowser || isNaverReferrer;
       const source = isFromNaver ? "naver" : "default";
+      const adminTarget = isFromNaver ? "special" : "general";
 
       console.log("UA:", ua);
       console.log("REF:", referrer);
@@ -47,6 +48,7 @@ export default function QuickStart() {
       console.log("isNaverReferrer:", isNaverReferrer);
       console.log("isFromNaver:", isFromNaver);
       console.log("source:", source);
+      console.log("adminTarget:", adminTarget);
 
       /* ==============================
       1️⃣ consult_requests 생성
@@ -54,26 +56,25 @@ export default function QuickStart() {
       let requestId;
 
       try {
-        const requestRef = await addDoc(
-          collection(db, "consult_requests"),
-          {
-            userId: user.uid,
-            category: "quick",
-            subCategory: "빠른 상담",
-            status: "waiting",
-            createdAt: serverTimestamp(),
+        const requestRef = await addDoc(collection(db, "consult_requests"), {
+          userId: user.uid,
+          category: "quick",
+          subCategory: "빠른 상담",
+          status: "waiting",
+          createdAt: serverTimestamp(),
 
-            // 유입 정보
-            source,
-            userAgent: ua,
-            referrer,
-            isNaverBrowser,
-            isNaverReferrer,
-            isFromNaver,
-             needsManualAssignment: true,
-  assignmentType: "manual"
-          }
-        );
+          source,
+          userAgent: ua,
+          referrer,
+          isNaverBrowser,
+          isNaverReferrer,
+          isFromNaver,
+
+          needsManualAssignment: true,
+          assignmentType: "manual",
+
+          adminTarget,
+        });
 
         requestId = requestRef.id;
 
@@ -86,23 +87,19 @@ export default function QuickStart() {
       /* ==============================
       2️⃣ chat_room 생성
       ============================== */
-      const roomRef = await addDoc(
-        collection(db, "chat_rooms"),
-        {
-          clientId: user.uid,
-          counselorId: null,
-          requestId,
-          status: "waiting",
-          users: [user.uid],
-          lastMessage: "",
-          lastMessageAt: null,
-          unreadCount: 0,
-          createdAt: serverTimestamp(),
+      const roomRef = await addDoc(collection(db, "chat_rooms"), {
+        clientId: user.uid,
+        counselorId: null,
+        requestId,
+        status: "waiting",
+        users: [user.uid],
+        lastMessage: "",
+        lastMessageAt: null,
+        unreadCount: 0,
+        createdAt: serverTimestamp(),
 
-          // 참고용
-          source,
-        }
-      );
+        source,
+      });
 
       const roomId = roomRef.id;
 
@@ -111,32 +108,28 @@ export default function QuickStart() {
       /* ==============================
       3️⃣ consult_requests 연결
       ============================== */
-      await updateDoc(
-        doc(db, "consult_requests", requestId),
-        { roomId }
-      );
+      await updateDoc(doc(db, "consult_requests", requestId), {
+        roomId,
+      });
 
       /* ==============================
       4️⃣ 관리자 푸시
       ============================== */
-      const res = await fetch(
-        "https://lawhero-web.vercel.app/api/sendPush",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            type: "consult",
-            message:
-              source === "naver"
-                ? "네이버 유입 빠른 상담 요청이 접수되었습니다."
-                : "새 빠른 상담 요청이 접수되었습니다.",
-            consultId: requestId,
-            source,
-          }),
-        }
-      );
+      const res = await fetch("/api/sendPush", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          type: "consult",
+          message:
+            adminTarget === "special"
+              ? "새 빠른 상담 요청이 접수되었습니다."
+              : "새 빠른 상담 요청이 접수되었습니다.",
+          consultId: requestId,
+          adminTarget,
+        }),
+      });
 
       if (!res.ok) {
         const err = await res.text();
