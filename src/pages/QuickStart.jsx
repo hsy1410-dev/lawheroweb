@@ -153,69 +153,117 @@ export default function QuickStart() {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        minHeight: "100vh",
-        background: "#F9FAFB",
-        padding: "0 30px",
-      }}
-    >
-      <div
-        style={{
-          width: 40,
-          height: 40,
-          border: "4px solid #E5E7EB",
-          borderTop: "4px solid #4F46E5",
-          borderRadius: "50%",
-          animation: "spin 1s linear infinite",
-        }}
-      />
+  <>
+    <div className="quick-wait-screen">
+      <div className="quick-wait-inner">
+        <div className="quick-spinner" />
 
-      <div
-        style={{
-          marginTop: 30,
-          background: "#FFFFFF",
-          borderRadius: 20,
-          padding: "24px 20px",
-          textAlign: "center",
-          boxShadow: "0 4px 14px rgba(0,0,0,0.08)",
-        }}
-      >
-        <div
-          style={{
-            fontSize: 18,
-            fontWeight: 700,
-            marginBottom: 8,
-          }}
-        >
-          빠른 상담 요청 중입니다
-        </div>
+        <div className="quick-wait-card">
+          <div className="quick-wait-title">빠른 상담 요청 중입니다</div>
 
-        <div
-          style={{
-            fontSize: 14,
-            color: "#6B7280",
-            lineHeight: 20,
-          }}
-        >
-          요청을 처리하고 있습니다.
-          <br />
-          잠시만 기다려주세요.
+          <div className="quick-wait-desc">
+            요청을 처리하고 있습니다.
+            <br />
+            잠시만 기다려주세요.
+          </div>
         </div>
       </div>
-
-      <style>
-        {`
-          @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-          }
-        `}
-      </style>
     </div>
-  );
+
+    <style>
+      {`
+        .quick-wait-screen {
+          min-height: 100dvh;
+          background: #F9FAFB;
+          padding: 24px 16px calc(24px + env(safe-area-inset-bottom));
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-sizing: border-box;
+        }
+
+        .quick-wait-inner {
+          width: 100%;
+          max-width: 420px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .quick-spinner {
+          width: 44px;
+          height: 44px;
+          border: 4px solid #E5E7EB;
+          border-top: 4px solid #4F46E5;
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+          flex-shrink: 0;
+        }
+
+        .quick-wait-card {
+          margin-top: 24px;
+          width: 100%;
+          background: #FFFFFF;
+          border-radius: 20px;
+          padding: 24px 18px;
+          text-align: center;
+          box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+          box-sizing: border-box;
+        }
+
+        .quick-wait-title {
+          font-size: 18px;
+          font-weight: 700;
+          line-height: 1.4;
+          margin-bottom: 10px;
+          word-break: keep-all;
+        }
+
+        .quick-wait-desc {
+          font-size: 14px;
+          color: #6B7280;
+          line-height: 1.6;
+          word-break: keep-all;
+        }
+
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 480px) {
+          .quick-wait-screen {
+            padding: 20px 14px calc(20px + env(safe-area-inset-bottom));
+            align-items: flex-start;
+          }
+
+          .quick-wait-inner {
+            max-width: 100%;
+            margin-top: 80px;
+          }
+
+          .quick-spinner {
+            width: 40px;
+            height: 40px;
+          }
+
+          .quick-wait-card {
+            margin-top: 20px;
+            border-radius: 18px;
+            padding: 22px 16px;
+          }
+
+          .quick-wait-title {
+            font-size: 17px;
+          }
+
+          .quick-wait-desc {
+            font-size: 13px;
+            line-height: 1.55;
+          }
+        }
+      `}
+    </style>
+  </>
+);
 }
