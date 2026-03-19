@@ -51,7 +51,7 @@ export default function GeneralConsult() {
 
     try {
       /* ==============================
-      0️⃣ 네이버 유입 판별
+      0️⃣ 네이버 유입 판별 + 관리자 타겟 결정
       ============================== */
       const ua = navigator.userAgent || "";
       const referrer = document.referrer || "";
@@ -61,9 +61,13 @@ export default function GeneralConsult() {
       const isFromNaver = isNaverBrowser || isNaverReferrer;
       const source = isFromNaver ? "naver" : "default";
 
+      const isSpecial = isFromNaver || category === "이혼";
+      const adminTarget = isSpecial ? "special" : "general";
+
       console.log("UA:", ua);
       console.log("REF:", referrer);
       console.log("source:", source);
+      console.log("adminTarget:", adminTarget);
 
       /* ==============================
       1️⃣ 상담사 조회
@@ -97,15 +101,17 @@ export default function GeneralConsult() {
         counselorId: assignedCounselorId,
         createdAt: serverTimestamp(),
 
-        // 유입 정보
         source,
         userAgent: ua,
         referrer,
         isNaverBrowser,
         isNaverReferrer,
         isFromNaver,
+
         needsManualAssignment: false,
-  assignmentType: "auto"
+        assignmentType: "auto",
+
+        adminTarget
       });
 
       const requestId = requestRef.id;
@@ -129,7 +135,6 @@ export default function GeneralConsult() {
           ...(assignedCounselorId ? { [assignedCounselorId]: 1 } : {})
         },
 
-        // 참고용
         source
       });
 
@@ -145,7 +150,34 @@ export default function GeneralConsult() {
       });
 
       /* ==============================
-      5️⃣ 채팅방 이동
+      5️⃣ 관리자 푸시
+      ============================== */
+      const pushRes = await fetch("/api/sendPush", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          type: "consult",
+          consultId: requestId,
+          adminTarget,
+          message:
+            adminTarget === "special"
+              ? "특수 분류 일반 상담 요청이 접수되었습니다."
+              : "새 일반 상담 요청이 접수되었습니다."
+        })
+      });
+
+      if (!pushRes.ok) {
+        const errText = await pushRes.text();
+        console.log("일반 상담 푸시 오류:", errText);
+      } else {
+        const pushData = await pushRes.json();
+        console.log("일반 상담 푸시 성공:", pushData);
+      }
+
+      /* ==============================
+      6️⃣ 채팅방 이동
       ============================== */
       navigate(`/chat/${roomId}`);
     } catch (err) {
@@ -188,6 +220,7 @@ export default function GeneralConsult() {
         <img
           src={lawheroLogo}
           style={{ width: 60 }}
+          alt="LawHero"
         />
 
         <div style={{ width: 24 }} />
