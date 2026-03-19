@@ -115,7 +115,7 @@ export default function QuickStart() {
       /* ==============================
       4️⃣ 관리자 푸시
       ============================== */
-      const res = await fetch("/api/sendPush", {
+      const res = await fetch("https://lawhero-web.vercel.app/api/sendPush", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
