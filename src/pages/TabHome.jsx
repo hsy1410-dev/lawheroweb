@@ -813,7 +813,7 @@ Google Play
 {/* 앱스토어 */}
 <button
 onClick={()=>{
-window.open("https://apps.apple.com/");
+window.open("itms-apps://apps.apple.com/app/id6761447617");
 }}
 style={{
 width:"100%",
