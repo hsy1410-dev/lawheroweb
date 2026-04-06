@@ -51,6 +51,7 @@ export default function Router() {
 
         <Route path="/" element={<Navigate to="/home" replace />} />
         <Route path="/install" element={<Install />} />
+        <Route path="/policy" element={<PrivacyPolicy />} />
 
         {/* 인증 */}
 <Route
@@ -104,7 +105,6 @@ export default function Router() {
           <Route path="/waiting" element={<WaitingScreen />} />
 
           <Route path="/chat/:id" element={<ChatRoom />} />
-<Route path="/policy" element={<PrivacyPolicy />} />
         </Route>
 
       </Routes>
