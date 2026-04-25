@@ -16,8 +16,11 @@ import naverIcon from "../assets/naver.png";
 import authImage from "../assets/auth_page.png";
 
 const NAVER_CLIENT_ID = "UZUJpbrhzwsltllwPbmX";
-const NAVER_REDIRECT_URI = "https://lawhero.kr/auth/naver/callback";
 const NAVER_STATE_STORAGE_KEY = "lawhero_naver_oauth_state";
+const NAVER_REDIRECT_URI_STORAGE_KEY = "lawhero_naver_redirect_uri";
+
+const getNaverRedirectUri = () =>
+  `${window.location.origin}/auth/naver/callback`;
 
 export default function AuthLanding() {
 
@@ -101,17 +104,19 @@ export default function AuthLanding() {
 
   const handleNaverLogin = () => {
 
+    const redirectUri = getNaverRedirectUri();
     const state =
       window.crypto?.randomUUID?.() ||
       `${Date.now()}-${Math.random().toString(36).slice(2)}`;
 
     sessionStorage.setItem(NAVER_STATE_STORAGE_KEY, state);
+    sessionStorage.setItem(NAVER_REDIRECT_URI_STORAGE_KEY, redirectUri);
 
     const url =
       `https://nid.naver.com/oauth2.0/authorize` +
       `?response_type=code` +
       `&client_id=${encodeURIComponent(NAVER_CLIENT_ID)}` +
-      `&redirect_uri=${encodeURIComponent(NAVER_REDIRECT_URI)}` +
+      `&redirect_uri=${encodeURIComponent(redirectUri)}` +
       `&state=${encodeURIComponent(state)}`;
 
     window.location.href = url;
