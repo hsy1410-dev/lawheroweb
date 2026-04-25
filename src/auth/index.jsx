@@ -12,7 +12,12 @@ import { auth, db } from "../firebase/firebase";
 
 import googleIcon from "../assets/google.png";
 import kakaoIcon from "../assets/kakao.png";
+import naverIcon from "../assets/naver.png";
 import authImage from "../assets/auth_page.png";
+
+const NAVER_CLIENT_ID = "UZUJpbrhzwsltllwPbmX";
+const NAVER_REDIRECT_URI = "https://lawhero.kr/auth/naver/callback";
+const NAVER_STATE_STORAGE_KEY = "lawhero_naver_oauth_state";
 
 export default function AuthLanding() {
 
@@ -88,6 +93,26 @@ export default function AuthLanding() {
       `?client_id=a1fbf977caeea589545f32274a254ab1` +
       `&redirect_uri=${encodeURIComponent(redirectUri)}` +
       `&response_type=code`;
+
+    window.location.href = url;
+  };
+
+  /* Naver 로그인 */
+
+  const handleNaverLogin = () => {
+
+    const state =
+      window.crypto?.randomUUID?.() ||
+      `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+
+    sessionStorage.setItem(NAVER_STATE_STORAGE_KEY, state);
+
+    const url =
+      `https://nid.naver.com/oauth2.0/authorize` +
+      `?response_type=code` +
+      `&client_id=${encodeURIComponent(NAVER_CLIENT_ID)}` +
+      `&redirect_uri=${encodeURIComponent(NAVER_REDIRECT_URI)}` +
+      `&state=${encodeURIComponent(state)}`;
 
     window.location.href = url;
   };
@@ -202,6 +227,33 @@ gap:10
 <img src={kakaoIcon} style={{width:22}}/>
 
 카카오로 시작하기
+
+</button>
+{/* Naver 버튼 */}
+
+<button
+onClick={handleNaverLogin}
+style={{
+width:"100%",
+background:"#03C75A",
+color:"white",
+border:"none",
+padding:16,
+borderRadius:18,
+fontSize:16,
+fontWeight:700,
+cursor:"pointer",
+display:"flex",
+alignItems:"center",
+justifyContent:"center",
+marginTop:16,
+gap:10
+}}
+>
+
+<img src={naverIcon} style={{width:22}}/>
+
+네이버로 시작하기
 
 </button>
 {/* Email 버튼 */}
