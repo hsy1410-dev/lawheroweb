@@ -39,6 +39,7 @@ import Nickname from "../auth/signup";
 import PhoneInfo from "../auth/phone-info";
 import VerifyScreen from "../auth/verify";
 import KakaoCallback from "../auth/KakaoCallback";
+import NaverCallback from "../auth/NaverCallback";
 export default function Router() {
 
   return (
@@ -57,6 +58,10 @@ export default function Router() {
 <Route
   path="/auth/kakao/callback"
   element={<KakaoCallback />}
+/>
+<Route
+  path="/auth/naver/callback"
+  element={<NaverCallback />}
 />
         <Route path="/auth" element={<AuthLanding />} />
         <Route path="/auth/nickname" element={<Nickname />} />
