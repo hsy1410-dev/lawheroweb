@@ -5,8 +5,12 @@ import { auth, db } from "../firebase/firebase";
 import hi from "../assets/hi.png";
 
 const API_BASE_URL = "https://api-z3zamhysqa-uc.a.run.app";
-const NAVER_REDIRECT_URI = "https://lawhero.kr/auth/naver/callback";
 const NAVER_STATE_STORAGE_KEY = "lawhero_naver_oauth_state";
+const NAVER_REDIRECT_URI_STORAGE_KEY = "lawhero_naver_redirect_uri";
+
+const getNaverRedirectUri = () =>
+  sessionStorage.getItem(NAVER_REDIRECT_URI_STORAGE_KEY) ||
+  `${window.location.origin}/auth/naver/callback`;
 
 export default function NaverCallback() {
   const [error, setError] = useState("");
@@ -48,7 +52,7 @@ export default function NaverCallback() {
           body: JSON.stringify({
             code,
             state,
-            redirectUri: NAVER_REDIRECT_URI,
+            redirectUri: getNaverRedirectUri(),
           }),
         });
 
@@ -62,6 +66,7 @@ export default function NaverCallback() {
         const cred = await signInWithCustomToken(auth, data.firebaseToken);
 
         sessionStorage.removeItem(NAVER_STATE_STORAGE_KEY);
+        sessionStorage.removeItem(NAVER_REDIRECT_URI_STORAGE_KEY);
 
         const uid = cred.user.uid;
         const snap = await getDoc(doc(db, "app_users", uid));
