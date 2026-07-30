@@ -275,7 +275,7 @@ export default function ChatList() {
                   fontSize:15
                 }}
               >
-                상담방 #{item.id.slice(0,6)}
+                상담방
               </div>
 
               <div

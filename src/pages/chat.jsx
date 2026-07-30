@@ -276,7 +276,7 @@ export default function ChatRoom() {
               color: "#111827",
             }}
           >
-            상담 #{id?.slice(0, 6)}
+            상담방
           </div>
 
           <div
