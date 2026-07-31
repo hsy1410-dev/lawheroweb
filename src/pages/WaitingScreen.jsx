@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import { doc, onSnapshot } from "firebase/firestore";
@@ -10,6 +10,22 @@ export default function WaitingScreen() {
 
   const requestId = searchParams.get("requestId");
   const [status, setStatus] = useState("waiting");
+  const conversionSentRef = useRef(false);
+
+  useEffect(() => {
+    if (
+      !requestId ||
+      conversionSentRef.current ||
+      typeof window.gtag !== "function"
+    ) {
+      return;
+    }
+
+    window.gtag("event", "conversion", {
+      send_to: "AW-18145041694/8F8gCKzFrtkcEJ66ncxD"
+    });
+    conversionSentRef.current = true;
+  }, [requestId]);
 
   useEffect(() => {
     if (!requestId) return;
