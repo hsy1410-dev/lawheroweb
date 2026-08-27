@@ -28,6 +28,8 @@ export default function PhoneInfoScreen() {
         doc(db, "app_users", user.uid),
         {
           realName: name,
+          phone,
+          phoneNumber: phone,
           phoneInput: phone,
           policyAgree: true
         },

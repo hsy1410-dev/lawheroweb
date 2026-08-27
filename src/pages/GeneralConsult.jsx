@@ -13,6 +13,10 @@ import {
 } from "firebase/firestore";
 
 import { auth, db } from "../firebase/firebase";
+import {
+  getApplicantPhone,
+  WEB_APPLICATION_METADATA
+} from "../firebase/consultationRequest";
 
 import lawheroLogo from "../assets/lawhero.png";
 
@@ -63,6 +67,7 @@ export default function GeneralConsult() {
 
       const isSpecial = isFromNaver || category === "이혼";
       const adminTarget = isSpecial ? "special" : "general";
+      const applicantPhone = await getApplicantPhone(user);
 
       console.log("UA:", ua);
       console.log("REF:", referrer);
@@ -101,6 +106,9 @@ export default function GeneralConsult() {
         counselorId: assignedCounselorId,
         createdAt: serverTimestamp(),
 
+        applicantPhone,
+        ...WEB_APPLICATION_METADATA,
+
         source,
         userAgent: ua,
         referrer,
@@ -135,7 +143,8 @@ export default function GeneralConsult() {
           ...(assignedCounselorId ? { [assignedCounselorId]: 1 } : {})
         },
 
-        source
+        source,
+        ...WEB_APPLICATION_METADATA
       });
 
       const roomId = roomRef.id;

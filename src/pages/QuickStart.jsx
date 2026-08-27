@@ -16,6 +16,10 @@ import {
 } from "react-icons/io5";
 
 import { auth, db } from "../firebase/firebase";
+import {
+  getApplicantPhone,
+  WEB_APPLICATION_METADATA,
+} from "../firebase/consultationRequest";
 
 const BOT_UID = "lawhero_quick_bot";
 const BOT_NAME = "LawHero";
@@ -144,6 +148,7 @@ export default function QuickStart() {
         source,
         adminTarget,
       } = getTrafficInfo();
+      const applicantPhone = await getApplicantPhone(user);
 
       const submittedAt = Date.now();
       const pendingText = text.trim();
@@ -191,6 +196,9 @@ export default function QuickStart() {
         roomId: roomRef.id,
         createdAt: serverTimestamp(),
 
+        applicantPhone,
+        ...WEB_APPLICATION_METADATA,
+
         source,
         userAgent: ua,
         referrer,
@@ -224,6 +232,7 @@ export default function QuickStart() {
         createdAt: serverTimestamp(),
 
         source,
+        ...WEB_APPLICATION_METADATA,
         conversationMode: "quick_bot",
       });
 
